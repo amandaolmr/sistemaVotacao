@@ -54,4 +54,9 @@ public class PautaContoller {
         }
         return ResponseEntity.badRequest().build();
     }
+
+    @GetMapping(value = "total-votacao/{idPauta}")
+    public ResponseEntity<?> contabilizarVotacao(@PathVariable Long idPauta) {
+        return ResponseEntity.ok(pautaService.contabilizarVotos(idPauta));
+    }
 }

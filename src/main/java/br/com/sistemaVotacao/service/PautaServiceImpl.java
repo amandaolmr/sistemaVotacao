@@ -7,6 +7,7 @@ import br.com.sistemaVotacao.model.dto.VotoDto;
 import br.com.sistemaVotacao.model.entity.Pauta;
 import br.com.sistemaVotacao.model.entity.Voto;
 import br.com.sistemaVotacao.model.entity.VotoSessao;
+import br.com.sistemaVotacao.model.enums.IntencaoVoto;
 import br.com.sistemaVotacao.model.mapper.PautaMapper;
 import br.com.sistemaVotacao.model.mapper.VotoMapper;
 import br.com.sistemaVotacao.repository.PautaRepository;
@@ -20,7 +21,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -81,6 +84,15 @@ public class PautaServiceImpl implements PautaService {
         var voto = votoRepository.save(votoMapper.toVoto(criaVotoDto));
         voto.setVotoSessao(votoSessao);
         return votoMapper.toVotoDto(voto);
+    }
+
+    @Override
+    public Map<IntencaoVoto, Long> contabilizarVotos(Long idpauta) {
+        return getVotoSessao(idpauta)
+                .map(vs -> vs.get().getVotos()
+                        .stream()
+                        .collect(Collectors.groupingBy(Voto::getIntencaoVoto,
+                                Collectors.counting()))).orElse(null);
     }
 
     private Optional<Optional<VotoSessao>> getVotoSessao(Long idPauta) {

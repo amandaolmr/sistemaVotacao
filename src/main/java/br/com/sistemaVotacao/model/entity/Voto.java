@@ -1,5 +1,6 @@
 package br.com.sistemaVotacao.model.entity;
 
+import br.com.sistemaVotacao.model.enums.IntencaoVoto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,6 +20,9 @@ public class Voto implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_voto")
     private Long idVoto;
+
+    @Column(name = "intencao_voto")
+    private IntencaoVoto intencaoVoto;
 
     @Column(name = "data_hora_voto")
     private LocalDateTime dataHoraVoto;
