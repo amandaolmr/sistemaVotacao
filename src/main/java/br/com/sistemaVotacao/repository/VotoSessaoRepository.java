@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface VotoSessaoRepository extends JpaRepository<VotoSessao, Long> {
-    @Query("select u from VotoSessao u WHERE u.pauta.id = ?1")
+    @Query("select u from VotoSessao u WHERE u.pauta.id = ?1") //ultilizando JPQL
     Optional<VotoSessao> findByPauta(Long idPauta);
 }

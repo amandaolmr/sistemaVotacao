@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class Swagger {
 
     @Bean
-    public Docket ApiDesafioArmazemPb() {
+    public Docket ApiDesafioSicred() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .enable(true)
                 .select()

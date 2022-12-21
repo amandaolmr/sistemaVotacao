@@ -1,6 +1,8 @@
 package br.com.sistemaVotacao.controller;
 
 import br.com.sistemaVotacao.controller.mapper.PautaRequestMapper;
+import br.com.sistemaVotacao.controller.mapper.VotoRequestMapper;
+import br.com.sistemaVotacao.controller.request.CriaVotoRequest;
 import br.com.sistemaVotacao.controller.request.CriarPautaRequest;
 import br.com.sistemaVotacao.controller.request.CriarSessaoPautaRequest;
 import br.com.sistemaVotacao.model.dto.PautaDto;
@@ -23,6 +25,8 @@ public class PautaContoller {
     private final PautaService pautaService;
     private final PautaRequestMapper pautaRequestMapper;
 
+    private final VotoRequestMapper votoRequestMapper;
+
     @PostMapping(value = "criar")
     public ResponseEntity<?> criarPauta(@RequestBody @Valid CriarPautaRequest criarPautaRequest) {
         Optional<PautaDto> pautaDto = pautaService.criaPauta(pautaRequestMapper.toPautaDto(criarPautaRequest));
@@ -37,6 +41,15 @@ public class PautaContoller {
         VotoDto votoDto = pautaService.sessaoVotacaoInicio(idPauta,
                 pautaRequestMapper.toSessaoPautaCriarDto(criarSessaoPautaRequest));
         if (Objects.nonNull(votoDto.getDataHoraVoto())) {
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @PostMapping(value = "votar/{idPauta}")
+    public ResponseEntity<?> votar(@PathVariable Long idPauta, @RequestBody CriaVotoRequest criaVotoRequest) {
+        var voto = pautaService.votarInicio(idPauta, votoRequestMapper.toCriaVotoDto(criaVotoRequest));
+        if (Objects.nonNull(voto.getDataHoraVoto())) {
             return ResponseEntity.status(HttpStatus.CREATED).build();
         }
         return ResponseEntity.badRequest().build();
