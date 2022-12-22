@@ -13,4 +13,5 @@ public class CriaVotoDto {
     private LocalDateTime dataHoraVoto;
     private Long idEleitor;
     private IntencaoVoto intencaoVoto;
+    private String cpf;
 }

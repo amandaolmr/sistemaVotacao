@@ -1,5 +1,7 @@
 package br.com.sistemaVotacao.service;
 
+import br.com.sistemaVotacao.cliente.RestClientValidaCPF;
+import br.com.sistemaVotacao.cliente.dto.ResponseStatusCpfDto;
 import br.com.sistemaVotacao.model.dto.CriaVotoDto;
 import br.com.sistemaVotacao.model.dto.PautaDto;
 import br.com.sistemaVotacao.model.dto.SessaoPautaCriarDto;
@@ -37,14 +39,13 @@ public class PautaServiceImpl implements PautaService {
     private final PautaRepository pautaRepository;
     private final PautaMapper pautaMapper;
     private final VotoSessaoRepository votoSessaoRepository;
-
     private final VotoMapper votoMapper;
-
     private final VotoRepository votoRepository;
-
+    private final RestClientValidaCPF restClientValidaCPF;
 
     @Override
     public Optional<PautaDto> criaPauta(PautaDto pautaDto) {
+
         Optional<PautaDto> pautaSavedOptional =
                 Optional.ofNullable(pautaMapper.toPautaDto(pautaRepository.save(pautaMapper.toPauta(pautaDto))));
         return pautaSavedOptional;
@@ -81,9 +82,14 @@ public class PautaServiceImpl implements PautaService {
             throw new SessaoEncerradaExcpetion();
         }
         verificaEleitorJaVotou(votoSessao, criaVotoDto);
-        var voto = votoRepository.save(votoMapper.toVoto(criaVotoDto));
-        voto.setVotoSessao(votoSessao);
-        return votoMapper.toVotoDto(voto);
+
+        ResponseStatusCpfDto responseStatusCpfDto = restClientValidaCPF.getValidaCPFStatus(criaVotoDto.getCpf());
+        if (responseStatusCpfDto.getStatus().equals("ABLE_TO_VOTE")) {
+            var voto = votoRepository.save(votoMapper.toVoto(criaVotoDto));
+            voto.setVotoSessao(votoSessao);
+            return votoMapper.toVotoDto(voto);
+        }
+        return votoMapper.toVotoDto(new Voto());
     }
 
     @Override
@@ -121,5 +127,4 @@ public class PautaServiceImpl implements PautaService {
     private LocalDateTime verificaDataHoraFechamento(LocalDateTime dataHoraFechamento) {
         return dataHoraFechamento == null ? LocalDateTime.now().plusSeconds(sessaoStatica) : dataHoraFechamento;
     }
-
 }
