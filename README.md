@@ -21,7 +21,7 @@
 
 ## Como executá-lo
 
-Clone ou faça [download](https://github.com/amandaolmr/sistemaVotacao) deste projeto e do projeto de validar o CPF [download](https://github.com/amandaolmr/valida-cpf), 
+Clone ou faça [download](https://github.com/amandaolmr/sistemaVotacao) deste projeto e também do projeto de validar o CPF [download](https://github.com/amandaolmr/valida-cpf), 
 vá para a implementação do servidor de sua escolha e siga as instruções README.
 
 1 - Importe o projeto em uma IDE de sua preferência<br>
