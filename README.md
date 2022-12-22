@@ -9,12 +9,12 @@
 - Contabilizar os votos e dar o resultado da votação na pauta. 
 
 ### Tecnologias e ferramentas utilizadas:
-- `IDE - Intelij`
+- `IntelliJ IDEA 2022.1.3 (Community Edition)`
 - `Spring`
 - `Hibernate (JPA)`
 - `PosgreSQL`
 - `Servidor Apache Tomcat v8.0`
-- `Swagger`
+- `Swagger 2.7.0`
 - `Gradle
 
 <br>
