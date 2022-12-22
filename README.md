@@ -15,7 +15,7 @@
 - `PosgreSQL`
 - `Servidor Apache Tomcat v8.0`
 - `Swagger 2.7.0`
-- `Gradle
+- `Gradle`
 
 <br>
 
