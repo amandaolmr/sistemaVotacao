@@ -20,7 +20,7 @@ import java.util.Optional;
 @RestController
 @CrossOrigin("*")
 @RequestMapping(value = "/api/pauta/")
-@RequiredArgsConstructor
+@RequiredArgsConstructor // para injeção de dependencias
 public class PautaContoller {
     private final PautaService pautaService;
     private final PautaRequestMapper pautaRequestMapper;
@@ -31,9 +31,9 @@ public class PautaContoller {
     public ResponseEntity<?> criarPauta(@RequestBody @Valid CriarPautaRequest criarPautaRequest) {
         Optional<PautaDto> pautaDto = pautaService.criaPauta(pautaRequestMapper.toPautaDto(criarPautaRequest));
         if (pautaDto.isPresent()) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(pautaDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(pautaDto); /// criado
         }
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build(); // nao encontrado
     }
 
     @PostMapping(value = "cria-sessao/{idPauta}")
