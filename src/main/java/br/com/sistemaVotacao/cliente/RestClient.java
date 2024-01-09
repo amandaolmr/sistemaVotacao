@@ -12,10 +12,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-@Component
-public class RestClient {
+@Component // Essa anotação indica ao Spring que essa classe é um componente gerenciado pelo framework, ou seja ela pode ser injetada em outras classes e utilizada como um bean.
+public class RestClient { //cliente REST genérico para enviar requisições HTTP
 
-    @Autowired
+    @Autowired //@Autowired para injetar um objeto RestTemplate, que é uma classe do Spring usada para realizar chamadas HTTP.
     private RestTemplate restTemplate;
 
     @Retryable(value = HttpClientErrorException.class, maxAttempts = 3, backoff = @Backoff(delay = 2000))
@@ -28,6 +28,6 @@ public class RestClient {
 
         exchange = restTemplate.exchange(uri, metodo, request, clazz);
 
-        return exchange.getBody();
+        return exchange.getBody(); // retorna o corpo da resposta da requisição.
     }
 }
