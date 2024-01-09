@@ -26,7 +26,6 @@ vá para a implementação do servidor de sua escolha e siga as instruções REA
 
 1 - Importe o projeto em uma IDE de sua preferência<br>
 2 - Execute o servidor do projeto valida-cpf porta: 9002 <br>
-3 - Execute o servidor do projeto sistemaVotacao porta: 9001 <br>
 3 - Abra o swegger (http://localhost:9001/swagger-ui.html) no browser de sua preferencia.
 
 ## Informações
